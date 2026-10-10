@@ -1,0 +1,688 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Shop the MarketPay demo storefront, build a cart, and try simulated checkout.">
+        <title>MarketPay — Demo storefront</title>
+        <link rel="stylesheet" href="/css/style.css">
+        <script type="module" src="./js/app.js"></script>
+    </head>
+    <body>
+        <div class="page">
+            <div id="signin-page" class="signin-screen">
+                <div class="signin-card">
+                    <div class="signin-brand-row">
+                        <a class="brand" href="./" aria-label="MarketPay home">
+                            <span class="brand-mark">M</span>
+                            <span>market<span class="brand-accent">pay</span></span>
+                        </a>
+                        <div class="signin-tagline">Shop the best.<br><strong>Pay with ease.</strong></div>
+                    </div>
+                    <div class="signin-heading">
+                        <div class="step-label">WELCOME TO MARKETPAY</div>
+                        <h1>Sign in to get started</h1>
+                        <p>Enter your email and phone number to continue shopping.</p>
+                    </div>
+                    <form id="signin-form" class="signin-form">
+                        <div class="field">
+                            <label for="signin-email">Email address</label>
+                            <input id="signin-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" maxlength="254" required>
+                        </div>
+                        <div class="field">
+                            <label for="signin-phone">Phone number</label>
+                            <input id="signin-phone" name="phone" type="tel" autocomplete="tel" placeholder="+234 800 000 0000" maxlength="30" required>
+                        </div>
+                        <div id="signin-message" class="signin-message" role="status" aria-live="polite"></div>
+                        <button class="primary-button signin-submit" type="submit">Continue to shop <span aria-hidden="true">→</span></button>
+                    </form>
+                    <div class="signin-privacy">Demo sign-in only. Your details stay in this browser and are not sent to a server.</div>
+                </div>
+            </div>
+
+            <div id="market-app" hidden>
+            <div class="topbar">
+                <a class="brand" href="./" aria-label="MarketPay home">
+                    <span class="brand-mark">M</span>
+                    <span>market<span class="brand-accent">pay</span></span>
+                </a>
+                <div class="header-search">
+                    <span class="search-icon" aria-hidden="true"></span>
+                    <input
+                        id="catalog-search"
+                        type="search"
+                        placeholder="Search products and categories"
+                        aria-label="Search products and categories"
+                    >
+                    <button
+                        id="clear-search"
+                        class="clear-search"
+                        type="button"
+                        aria-label="Clear search"
+                        hidden
+                    >×</button>
+                </div>
+                <div class="header-actions">
+                    <button
+                        id="account-button"
+                        class="icon-nav"
+                        type="button"
+                        aria-label="Profile"
+                        title="Profile"
+                    >
+                        <span class="icon icon-account" aria-hidden="true"></span>
+                    </button>
+                    <button
+                        id="settings-button"
+                        class="icon-nav"
+                        type="button"
+                        aria-label="Settings"
+                        title="Settings"
+                    >
+                        <span class="icon icon-settings" aria-hidden="true"></span>
+                    </button>
+                    <button
+                        id="history-button"
+                        class="icon-nav history-nav"
+                        type="button"
+                        aria-label="Transaction history"
+                        title="Transaction history"
+                    >
+                        <span class="icon icon-history" aria-hidden="true"></span>
+                    </button>
+                    <button
+                        id="cart-button"
+                        class="icon-nav cart-nav"
+                        type="button"
+                        aria-label="Shopping cart"
+                        title="Shopping cart"
+                    >
+                        <span class="icon icon-cart" aria-hidden="true"></span>
+                        <span id="cart-count" class="cart-count">0</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="app-message" class="message" role="status" aria-live="polite"></div>
+
+            <div id="shop-page" class="page-screen">
+                <div class="hero">
+                    <div class="hero-slides">
+                        <div
+                            class="hero-slide hero-slide-home active"
+                            data-hero-slide="0"
+                        >
+                            <div class="hero-copy">
+                                <div class="hero-kicker">MAKE YOUR SPACE YOURS</div>
+                                <h1>Little upgrades.<br>Big everyday joy.</h1>
+                                <div class="hero-caption">Home finds for the way you live.</div>
+                                <button
+                                    class="hero-shop-button"
+                                    type="button"
+                                    data-shop-category="category-8"
+                                >
+                                    Explore home <span>→</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div
+                            class="hero-slide hero-slide-gadgets"
+                            data-hero-slide="1"
+                        >
+                            <div class="hero-copy">
+                                <div class="hero-kicker">YOUR NEXT FAVOURITE GADGET</div>
+                                <h1>Smart picks.<br>Better days.</h1>
+                                <div class="hero-caption">Fresh tech and everyday essentials.</div>
+                                <button
+                                    class="hero-shop-button"
+                                    type="button"
+                                    data-shop-category="category-1"
+                                >
+                                    Shop gadgets <span>→</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div
+                            class="hero-slide hero-slide-fashion"
+                            data-hero-slide="2"
+                        >
+                            <div class="hero-copy">
+                                <div class="hero-kicker">STYLE THAT FEELS LIKE YOU</div>
+                                <h1>Find your fit.<br>Own your look.</h1>
+                                <div class="hero-caption">Standout style, picked just for you.</div>
+                                <button
+                                    class="hero-shop-button"
+                                    type="button"
+                                    data-shop-category="category-4"
+                                >
+                                    Explore fashion <span>→</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div
+                            class="hero-slide hero-slide-beauty"
+                            data-hero-slide="3"
+                        >
+                            <div class="hero-copy">
+                                <div class="hero-kicker">A LITTLE CARE GOES A LONG WAY</div>
+                                <h1>Feel good.<br>Every single day.</h1>
+                                <div class="hero-caption">Beauty and care for your routine.</div>
+                                <button
+                                    class="hero-shop-button"
+                                    type="button"
+                                    data-shop-category="category-10"
+                                >
+                                    Discover beauty <span>→</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div
+                            class="hero-slide hero-slide-living"
+                            data-hero-slide="4"
+                        >
+                            <div class="hero-copy">
+                                <div class="hero-kicker">THOUGHTFUL FINDS, EVERYWHERE</div>
+                                <h1>Shop the best.<br>Pay with ease.</h1>
+                                <div class="hero-caption">Your next great find is waiting.</div>
+                                <button
+                                    class="hero-shop-button"
+                                    type="button"
+                                    data-shop-category="category-7"
+                                >
+                                    Browse the shop <span>→</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="hero-dots" class="hero-dots" aria-label="Featured collections"></div>
+                    <div class="hero-counter"><span id="hero-current">01</span> / 05</div>
+                </div>
+                <div class="home-intro">
+                    <div>
+                        <div class="eyebrow">GOOD FINDS, ALL IN ONE PLACE</div>
+                        <h2>Shop your kind of good</h2>
+                    </div>
+                    <div class="home-intro-copy">
+                        Explore 20 collections filled with useful, lovely, and just-because things.
+                    </div>
+                    <button
+                        id="theme-quick-toggle"
+                        class="theme-quick-toggle"
+                        type="button"
+                        aria-label="Toggle dark appearance"
+                        title="Toggle dark appearance"
+                    >◐ <span>Appearance</span></button>
+                </div>
+                <div
+                    id="category-chips"
+                    class="category-chips"
+                    aria-label="Shop by category"
+                ></div>
+                <div
+                    id="catalog-message"
+                    class="catalog-message"
+                    role="status"
+                    aria-live="polite"
+                ></div>
+                <div id="catalog-sections" class="catalog-sections"></div>
+                <div class="demo-notice shop-notice">
+                    <div class="notice-icon" aria-hidden="true">i</div>
+                    <div>
+                        <div class="notice-title">A safe place to experiment</div>
+                        <div class="notice-copy">
+                            This is a frontend demo. Never enter real payment details.
+                            Payments are simulated and no payment provider is contacted.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="cart-page" class="page-screen" hidden>
+                <button class="back-button" type="button" data-back-to-shop>← Continue shopping</button>
+                <div class="history-page-heading">
+                    <div class="step-label">YOUR BAG</div>
+                    <h1>Shopping cart</h1><p id="cart-subtitle">Review your picks before payment.</p></div>
+                <div class="cart-layout">
+                    <div class="panel cart-panel">
+                        <div class="panel-heading">
+                            <div><div class="step-label">YOUR LINEUP</div>
+                            <h2 id="cart-heading">Cart items</h2></div></div>
+                            <div id="cart-items" class="cart-items"></div></div>
+                    <div class="panel cart-summary">
+                        <div class="step-label">ORDER SUMMARY</div>
+                        <div class="cart-summary-line">
+                            <span>Items</span>
+                            <strong id="cart-item-total"></strong>
+                        </div>
+                        <div class="cart-summary-line discount-line">
+                            <span>You save</span>
+                            <strong id="cart-savings"></strong>
+                        </div>
+                        <div class="cart-summary-line cart-grand-total">
+                            <span>Total</span>
+                            <strong id="cart-total"></strong>
+                        </div>
+                        <button
+                            id="proceed-payment"
+                            class="primary-button cart-proceed"
+                            type="button"
+                        >
+                            Proceed to payment <span>→</span>
+                        </button>
+                        <div class="demo-hint">Payment options come next. Demo only.</div>
+                    </div>
+                </div>
+                <div id="cart-message" class="delivery-message" role="status" aria-live="polite"></div>
+            </div>
+
+            <div id="payment-page" class="page-screen" hidden>
+                <button class="back-button" type="button" data-back-to-cart>← Back to cart</button>
+                <div class="history-page-heading">
+                    <div class="step-label">CHECKOUT • PAYMENT</div>
+                    <h1>Choose how to pay</h1>
+                    <p>Your payment options appear here after reviewing your cart.</p>
+                </div>
+                <div class="payment-layout">
+                    <div class="panel payment-panel">
+                        <div class="panel-heading">
+                            <div>
+                                <div class="step-label">PAYMENT METHOD</div>
+                                <h2>Select a payment option</h2>
+                            </div>
+                            <div class="secure-note">
+                                <span aria-hidden="true">●</span>
+                                Demo only
+                            </div>
+                        </div>
+                        <div id="payment-methods" class="payment-methods"></div>
+                        <div id="payment-details" class="payment-details"></div>
+                        <div class="checkout-row">
+                            <div>
+                                <div class="muted">TOTAL</div>
+                                <div id="checkout-total" class="checkout-total"></div>
+                            </div>
+                            <button
+                                id="checkout-button"
+                                class="primary-button"
+                                type="button"
+                            >
+                                Continue to delivery
+                                <span aria-hidden="true">→</span>
+                            </button>
+                        </div>
+                        <div id="checkout-panel" class="checkout-panel" hidden></div>
+                    </div>
+                    <div class="panel payment-order-summary">
+                        <div class="step-label">YOUR ORDER</div>
+                        <div id="payment-order-items" class="payment-order-items"></div>
+                        <div class="delivery-total-row">
+                            <span>Total</span>
+                            <strong id="payment-order-total"></strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="authorization-page" class="page-screen" hidden>
+                <button class="back-button" type="button" data-back-to-shop>← Back to checkout</button>
+                <div class="authorization-layout">
+                    <div class="panel authorization-panel">
+                        <div class="authorization-heading">
+                            <div class="step-label">BANK TRANSFER • DEMO AUTHORIZATION</div>
+                            <h1>Complete your transfer</h1>
+                            <p>Scan to authorize, or use the demo account details below.</p>
+                        </div>
+                        <div class="transfer-amount">
+                            <div class="muted">AMOUNT TO TRANSFER</div>
+                            <div id="transfer-amount" class="transfer-amount-value"></div>
+                            <div id="transfer-product" class="muted"></div>
+                        </div>
+                        <div class="authorization-content">
+                            <div class="scan-card">
+                                <div class="step-label">SCAN AUTHORIZATION</div>
+                                <div class="qr-code"></div>
+                                <div class="scan-title">Scan demo order details</div>
+                                <div class="scan-copy">This scannable code shows the order reference and amount. It does not start a real payment.</div>
+                            </div>
+                            <div class="account-card">
+                                <div class="step-label">TRANSFER TO THIS DEMO ACCOUNT</div>
+                                <div class="account-bank">MarketPay Demo Bank</div>
+                                <div class="account-name">Account name <strong>MarketPay Checkout</strong></div>
+                                <div class="account-number-label">ACCOUNT NUMBER</div>
+                                <div id="transfer-account-number" class="account-number">012 345 6789</div>
+                                <div class="demo-hint">Use demo details only. No real transfer will be made.</div>
+                            </div>
+                        </div>
+                        <div class="timer-panel">
+                            <div>
+                                <div class="step-label">TIME TO COMPLETE TRANSFER</div>
+                                <div class="timer-copy">This demo payment expires when the timer reaches zero.</div>
+                            </div>
+                            <div id="transfer-timer" class="transfer-timer" role="timer" aria-live="off">20:00</div>
+                        </div>
+                        <div id="authorization-expired" class="expired-message" hidden>Time expired. Start checkout again to create a new demo transfer.</div>
+                        <div class="simulation-actions authorization-actions">
+                            <button
+                                id="confirm-transfer-button"
+                                class="primary-button confirm-transfer-button"
+                                type="button"
+                            >
+                                I have done the transfer
+                                <span aria-hidden="true">→</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="delivery-page" class="page-screen" hidden>
+                <button class="back-button" type="button" data-back-to-shop>← Back to store</button>
+                <div class="history-page-heading">
+                    <div class="step-label">CHECKOUT • DELIVERY DETAILS</div>
+                    <h1>Where should we deliver?</h1>
+                    <p>Enter the delivery details for your order before continuing to payment.</p>
+                </div>
+                <div class="delivery-layout">
+                    <form id="delivery-form" class="panel delivery-form">
+                        <div class="panel-heading">
+                            <div>
+                                <div class="step-label">SHIPPING INFORMATION</div>
+                                <h2>Your delivery address</h2>
+                            </div>
+                        </div>
+                        <div class="delivery-fields">
+                            <div class="field">
+                                <label for="delivery-saved-address">Saved delivery address</label>
+                                <select id="delivery-saved-address" name="savedAddress">
+                                    <option value="">Enter a new address</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="delivery-name">Full name</label>
+                                <input id="delivery-name" name="recipient" type="text" autocomplete="name" placeholder="Your full name" required>
+                            </div>
+                            <div class="field">
+                                <label for="delivery-phone">Phone number</label>
+                                <input id="delivery-phone" name="phone" type="tel" autocomplete="tel" placeholder="+234 800 000 0000" required>
+                            </div>
+                            <div class="field">
+                                <label for="delivery-country">Country</label>
+                                <select id="delivery-country" name="country" autocomplete="country-name" required>
+                                    <option value="Nigeria" selected>Nigeria</option>
+                                    <option value="Ghana">Ghana</option>
+                                    <option value="Kenya">Kenya</option>
+                                    <option value="South Africa">South Africa</option>
+                                    <option value="United Kingdom">United Kingdom</option>
+                                    <option value="United States">United States</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="delivery-field-row">
+                                <div class="field">
+                                    <label for="delivery-state">State / region</label>
+                                    <input id="delivery-state" name="state" type="text" autocomplete="address-level1" placeholder="e.g. Lagos" required>
+                                </div>
+                                <div class="field">
+                                    <label for="delivery-city">City</label>
+                                    <input id="delivery-city" name="city" type="text" autocomplete="address-level2" placeholder="e.g. Ikeja" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="delivery-address">Home address</label>
+                                <input id="delivery-address" name="address" type="text" autocomplete="street-address" placeholder="Street name, house or apartment number" required>
+                            </div>
+                            <div class="field">
+                                <label for="delivery-postal">Postal code <span class="optional-label">OPTIONAL</span></label>
+                                <input id="delivery-postal" name="postalCode" type="text" autocomplete="postal-code" placeholder="Postal code">
+                            </div>
+                        </div>
+                        <div id="delivery-message" class="delivery-message" role="status" aria-live="polite"></div>
+                        <div class="delivery-submit-row">
+                            <label class="save-address-option">
+                                <input id="delivery-save-address" type="checkbox" checked>
+                                <span>Save this address to my profile</span>
+                            </label>
+                            <button class="primary-button" type="submit">Continue to payment <span aria-hidden="true">→</span></button>
+                        </div>
+                    </form>
+                    <div class="panel delivery-summary">
+                        <div class="step-label">ORDER SUMMARY</div>
+                        <div id="delivery-product" class="delivery-product"></div>
+                        <div id="delivery-method" class="delivery-method"></div>
+                        <div class="delivery-total-row">
+                            <span>Total</span>
+                            <strong id="delivery-total"></strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="verification-page" class="page-screen" hidden>
+                <div class="verification-panel">
+                    <div id="verification-spinner" class="loading-spinner" aria-hidden="true"></div>
+                    <div id="verification-check" class="verification-check" aria-hidden="true" hidden>✓</div>
+                    <div id="verification-title" class="verification-title" role="status" aria-live="polite">Verifying your payment</div>
+                    <div id="verification-copy" class="verification-copy">Please wait while we confirm this demo payment.</div>
+                    <div class="verification-demo-note">Demo verification only — no real bank is contacted.</div>
+                </div>
+            </div>
+
+            <div id="history-page" class="page-screen" hidden>
+                <button class="back-button" type="button" data-back-to-shop>← Back to store</button>
+                <div class="history-page-heading">
+                    <div class="step-label">YOUR ACTIVITY</div>
+                    <h1>Transaction history</h1>
+                    <p>Select “View receipt” on a transaction to see its full receipt.</p>
+                </div>
+                <div id="history-message" class="delivery-message" role="status" aria-live="polite"></div>
+                <div class="panel history-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <div class="step-label">SAVED IN THIS BROWSER</div>
+                            <h2>Recent transactions</h2>
+                        </div>
+                        <div id="history-page-count" class="history-count">0</div>
+                    </div>
+                    <div id="transaction-list" class="transaction-list"></div>
+                    <div class="history-footnote">Demo transactions are saved in this browser.</div>
+                </div>
+            </div>
+
+            <div id="profile-page" class="page-screen" hidden>
+                <button class="back-button" type="button" data-back-to-shop>← Back to store</button>
+                <div class="history-page-heading">
+                    <div class="step-label">YOUR ACCOUNT</div>
+                    <h1>Your profile</h1>
+                    <p>Keep your contact, delivery, and payment preferences together.</p>
+                </div>
+                <div class="profile-layout">
+                    <div class="panel profile-card">
+                        <div class="profile-identity">
+                            <label class="avatar-picker" for="profile-avatar-input">
+                                <img id="profile-avatar" alt="" hidden>
+                                <span id="profile-avatar-placeholder">Add photo</span>
+                            </label>
+                            <input id="profile-avatar-input" type="file" accept="image/*" hidden>
+                            <div>
+                                <div id="profile-badge" class="customer-badge">MarketPay customer</div>
+                                <div class="profile-email-label">ACCOUNT EMAIL</div>
+                                <div id="profile-email" class="profile-email"></div>
+                            </div>
+                        </div>
+                        <form id="profile-form" class="profile-form">
+                            <div class="field">
+                                <label for="profile-phone">Phone number</label>
+                                <input id="profile-phone" name="phone" type="tel" autocomplete="tel" required>
+                            </div>
+                            <div id="profile-message" class="delivery-message" role="status" aria-live="polite"></div>
+                            <button class="primary-button" type="submit">Save profile</button>
+                        </form>
+                    </div>
+                    <div class="panel profile-card">
+                        <div class="profile-card-heading">
+                            <div><div class="step-label">DELIVERY</div><h2>Saved addresses</h2></div>
+                            <button id="profile-add-address" class="secondary-button" type="button">Add address</button>
+                        </div>
+                        <div id="profile-address-list" class="saved-detail-list"></div>
+                        <form id="profile-address-form" class="profile-form" hidden>
+                            <div class="field">
+                                <label for="profile-address-recipient">Full name</label>
+                                <input id="profile-address-recipient" name="recipient" autocomplete="name" required>
+                            </div>
+                            <div class="field">
+                                <label for="profile-address-phone">Phone number</label>
+                                <input id="profile-address-phone" name="phone" type="tel" autocomplete="tel" required>
+                            </div>
+                            <div class="field">
+                                <label for="profile-address-country">Country</label>
+                                <input id="profile-address-country" name="country" autocomplete="country-name" required>
+                            </div>
+                            <div class="delivery-field-row">
+                                <div class="field">
+                                    <label for="profile-address-state">State / region</label>
+                                    <input id="profile-address-state" name="state" required>
+                                </div>
+                                <div class="field">
+                                    <label for="profile-address-city">City</label>
+                                    <input id="profile-address-city" name="city" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="profile-address-line">Home address</label>
+                                <input id="profile-address-line" name="address" autocomplete="street-address" required>
+                            </div>
+                            <div class="field">
+                                <label for="profile-address-postal">Postal code <span class="optional-label">OPTIONAL</span></label>
+                                <input id="profile-address-postal" name="postalCode" autocomplete="postal-code">
+                            </div>
+                            <div id="profile-address-message" class="delivery-message" role="status" aria-live="polite"></div>
+                            <button class="primary-button" type="submit">Save address</button>
+                        </form>
+                    </div>
+                    <div class="panel profile-card">
+                        <div class="profile-card-heading">
+                            <div><div class="step-label">PAYMENT</div><h2>Saved cards</h2></div>
+                            <button id="profile-add-card" class="secondary-button" type="button">Add card</button>
+                        </div>
+                        <p class="profile-helper">Only the card brand and last four digits are saved in this browser. Never store a real card here.</p>
+                        <div id="profile-card-list" class="saved-detail-list"></div>
+                        <form id="profile-card-form" class="profile-form" hidden>
+                            <div class="field">
+                                <label for="profile-card-number">Demo card number</label>
+                                <input id="profile-card-number" name="cardNumber" inputmode="numeric" autocomplete="off" placeholder="4242 4242 4242 4242" required>
+                            </div>
+                            <div id="profile-card-message" class="delivery-message" role="status" aria-live="polite"></div>
+                            <button class="secondary-button" type="submit">Save masked card label</button>
+                        </form>
+                    </div>
+                    <div class="panel profile-card">
+                        <div class="profile-card-heading">
+                            <div><div class="step-label">YOUR ORDERS</div><h2>Track my transactions</h2></div>
+                            <button id="profile-history-button" class="text-button" type="button">History</button>
+                        </div>
+                        <div id="profile-order-list" class="saved-detail-list"></div>
+                    </div>
+                    <div class="profile-signout-row">
+                        <div><strong>Sign out</strong><div class="profile-helper">Your saved demo data remains in this browser.</div></div>
+                        <button id="signout-button" class="secondary-button signout-action" type="button">Sign out</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="settings-page" class="page-screen" hidden>
+                <button class="back-button" type="button" data-back-to-shop>← Back to store</button>
+                <div class="history-page-heading">
+                    <div class="step-label">PREFERENCES</div>
+                    <h1>Settings</h1>
+                    <p>Choose how MarketPay looks and how prices are shown on this device.</p>
+                </div>
+                <div class="settings-layout">
+                    <div class="panel settings-card">
+                        <div class="step-label">REGION & CURRENCY</div>
+                        <h2>Price display</h2>
+                        <p class="profile-helper">Demo exchange rates are fixed for offline use. Your order records remain in NGN.</p>
+                        <div class="field">
+                            <label for="currency-select">Currency</label>
+                            <select id="currency-select">
+                                <option value="NGN">Nigerian naira (NGN)</option>
+                                <option value="EUR">Euro (EUR)</option>
+                                <option value="GBP">Pound sterling (GBP)</option>
+                                <option value="USD">US dollar (USD)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="panel settings-card">
+                        <div class="step-label">APPEARANCE</div>
+                        <h2>Theme</h2>
+                        <p class="profile-helper">System follows your device appearance. You can override it here.</p>
+                        <div class="field">
+                            <label for="appearance-select">Color theme</label>
+                            <select id="appearance-select">
+                                <option value="system">Use device setting</option>
+                                <option value="light">Light</option>
+                                <option value="dark">Dark</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="panel settings-card">
+                        <div class="step-label">PRIVACY</div>
+                        <h2>Cookie preferences</h2>
+                        <p class="profile-helper">Only essential local browser storage is needed for this demo.</p>
+                        <button id="cookie-settings-button" class="secondary-button" type="button">Review cookie choices</button>
+                    </div>
+                    <div id="settings-message" class="delivery-message" role="status" aria-live="polite"></div>
+                </div>
+            </div>
+
+            <div id="tracking-overlay" class="receipt-overlay tracking-overlay" hidden>
+                <div class="receipt-card tracking-card" role="dialog" aria-modal="true" aria-labelledby="tracking-title">
+                    <button class="receipt-close tracking-close" type="button" aria-label="Close tracking">×</button>
+                    <div class="step-label">PACKAGE PROGRESS</div>
+                    <h2 id="tracking-title">Track your order</h2>
+                    <div id="tracking-reference" class="tracking-reference"></div>
+                    <div class="tracking-progress-track"><div id="tracking-progress-fill" class="tracking-progress-fill"></div></div>
+                    <div class="tracking-carousel">
+                        <button id="tracking-previous" class="tracking-arrow" type="button" aria-label="Previous tracking step">←</button>
+                        <div id="tracking-stage" class="tracking-stage" aria-live="polite"></div>
+                        <button id="tracking-next" class="tracking-arrow" type="button" aria-label="Next tracking step">→</button>
+                    </div>
+                    <div id="tracking-timeline" class="tracking-timeline"></div>
+                    <div class="profile-helper">Demo shipment timeline: the listed times are estimated milestones, not live carrier scans.</div>
+                </div>
+            </div>
+
+            <div id="receipt-overlay" class="receipt-overlay" hidden>
+                <div class="receipt-card" role="dialog" aria-modal="true" aria-labelledby="receipt-title">
+                    <button class="receipt-close" type="button" aria-label="Close receipt">×</button>
+                    <div class="receipt-brand">MARKET<span>PAY</span> DEMO</div>
+                    <h2 id="receipt-title">Transaction receipt</h2>
+                    <div id="receipt-status" class="receipt-status"></div>
+                    <div id="receipt-details" class="receipt-details"></div>
+                    <div class="receipt-note">Demo receipt only. No real payment was processed.</div>
+                </div>
+            </div>
+
+            <div id="cookie-notice" class="cookie-overlay" hidden>
+                <div class="cookie-card" role="dialog" aria-modal="true" aria-labelledby="cookie-title">
+                    <div class="cookie-icon" aria-hidden="true">●</div>
+                    <div class="cookie-content">
+                        <div id="cookie-title" class="cookie-title">Your privacy matters</div>
+                        <div class="cookie-copy">
+                            This demo uses essential browser storage to remember your
+                            sign-in and checkout history. No analytics or advertising
+                            cookies are used.
+                        </div>
+                        <div class="cookie-actions">
+                            <button id="cookie-essential" class="cookie-button secondary" type="button">Essential only</button>
+                            <button id="cookie-accept" class="cookie-button primary" type="button">Accept</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">MARKETPAY DEMO <span>•</span> A SIMPLE MVC PAYMENT FLOW</div>
+            </div>
+        </div>
+    <!-- Code injected by live-server -->
+
+</body>
+</html>
